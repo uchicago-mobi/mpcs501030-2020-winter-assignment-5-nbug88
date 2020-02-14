@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Map View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="map5anaru" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MtX-ag-vkb">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </mapView>
+                            <view opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ovl-lJ-Lrt">
+                                <rect key="frame" x="20" y="64" width="374" height="140"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a Pin!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWj-7D-zkP">
+                                        <rect key="frame" x="8" y="8" width="291" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="VhH-gL-ADl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                        <color key="textColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wUg-Dd-Skq">
+                                        <rect key="frame" x="8" y="56" width="358" height="76"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="213" id="XgZ-Ve-o9I"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="XgZ-Ve-o9I"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact-widthClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="XgZ-Ve-o9I"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBu-oa-fRN">
+                                        <rect key="frame" x="326" y="8" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="fqg-hC-I2B"/>
+                                            <constraint firstAttribute="height" constant="40" id="zLb-fL-aum"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="star" catalog="system"/>
+                                        <state key="selected" image="star.fill" catalog="system"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="wUg-Dd-Skq" firstAttribute="top" secondItem="fWj-7D-zkP" secondAttribute="bottom" constant="8" id="CGu-JO-cgg"/>
+                                    <constraint firstAttribute="height" constant="258" id="Q3C-bB-C1W"/>
+                                    <constraint firstItem="wUg-Dd-Skq" firstAttribute="leading" secondItem="y4v-cq-7bl" secondAttribute="leading" constant="8" id="UbN-oa-7bW"/>
+                                    <constraint firstItem="y4v-cq-7bl" firstAttribute="bottom" secondItem="wUg-Dd-Skq" secondAttribute="bottom" constant="8" id="XYU-4w-ga9"/>
+                                    <constraint firstItem="fWj-7D-zkP" firstAttribute="top" secondItem="y4v-cq-7bl" secondAttribute="top" constant="8" id="adK-k6-Qxx"/>
+                                    <constraint firstAttribute="width" constant="291" id="byf-Og-nec"/>
+                                    <constraint firstItem="y4v-cq-7bl" firstAttribute="trailing" secondItem="wUg-Dd-Skq" secondAttribute="trailing" constant="8" id="hhj-Nx-CuO"/>
+                                    <constraint firstItem="y4v-cq-7bl" firstAttribute="trailing" secondItem="TBu-oa-fRN" secondAttribute="trailing" constant="8" id="iMR-59-EAl"/>
+                                    <constraint firstItem="fWj-7D-zkP" firstAttribute="leading" secondItem="y4v-cq-7bl" secondAttribute="leading" constant="8" id="kjC-y4-b04"/>
+                                    <constraint firstItem="TBu-oa-fRN" firstAttribute="top" secondItem="y4v-cq-7bl" secondAttribute="top" constant="8" id="lWC-Wl-qxo"/>
+                                    <constraint firstAttribute="height" constant="140" id="nfy-04-w9h"/>
+                                    <constraint firstItem="y4v-cq-7bl" firstAttribute="trailing" secondItem="fWj-7D-zkP" secondAttribute="trailing" constant="75" id="s9L-AM-9gX"/>
+                                </constraints>
+                                <viewLayoutGuide key="safeArea" id="y4v-cq-7bl"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Q3C-bB-C1W"/>
+                                        <exclude reference="byf-Og-nec"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact-widthClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="Q3C-bB-C1W"/>
+                                        <include reference="byf-Og-nec"/>
+                                        <exclude reference="nfy-04-w9h"/>
+                                        <exclude reference="XYU-4w-ga9"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <button opaque="NO" alpha="0.94999999999999996" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HfY-wA-tY9">
+                                <rect key="frame" x="20" y="803" width="374" height="59"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="33"/>
+                                <state key="normal" title="Favorites">
+                                    <color key="titleColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ovl-lJ-Lrt" secondAttribute="trailing" constant="20" id="11l-mf-XfD"/>
+                            <constraint firstItem="ovl-lJ-Lrt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="5eK-Dz-2j5"/>
+                            <constraint firstAttribute="trailing" secondItem="MtX-ag-vkb" secondAttribute="trailing" id="9XU-1f-3Fn"/>
+                            <constraint firstItem="MtX-ag-vkb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="G1u-mk-MVe"/>
+                            <constraint firstItem="MtX-ag-vkb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gMf-Mi-din"/>
+                            <constraint firstAttribute="bottom" secondItem="MtX-ag-vkb" secondAttribute="bottom" id="pae-EQ-B6x"/>
+                            <constraint firstItem="ovl-lJ-Lrt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="vkZ-2U-YmP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <variation key="heightClass=compact-widthClass=regular">
+                            <mask key="constraints">
+                                <exclude reference="11l-mf-XfD"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="MtX-ag-vkb" id="Oz7-0Y-4K7"/>
+                        <outlet property="pinDetail" destination="wUg-Dd-Skq" id="LGB-2l-gIm"/>
+                        <outlet property="titlePin" destination="fWj-7D-zkP" id="Ub7-uL-YPZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="134.78260869565219" y="135.9375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="star" catalog="system" width="64" height="58"/>
+        <image name="star.fill" catalog="system" width="64" height="58"/>
+    </resources>
+</document>
