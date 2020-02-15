@@ -26,43 +26,30 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //Set the button to empty star to start
         starButton.setImage(UIImage(systemName: "star"), for: .normal)
         starButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         mapView.showsCompass = false
         mapView.pointOfInterestFilter = .excludingAll
-        
         // Setting up the starting View of the MAP
         let miles: Double = 20000
         let zoomLocation = CLLocationCoordinate2DMake(41.9, -87.655697)
         let viewRegion = MKCoordinateRegion.init(center: zoomLocation,
                                                  latitudinalMeters: miles, longitudinalMeters: miles)
         mapView.setRegion(viewRegion, animated: true)
-        
         DataManager.sharedInstance.loadAnnotationFromPlist(mapView)
     }
 
     @objc func buttonTapped(_ sender: UIButton) {
-        
-        if starButton.currentImage == UIImage(systemName: "star")
-        { print("emter 1")
+        if starButton.currentImage == UIImage(systemName: "star") {
             DataManager.sharedInstance.saveFavorites(selectedPlace)
             starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            // save fourtites using the DataManager.
-            // Change the state of the button state.
         }
-        
-        else if starButton.currentImage == UIImage(systemName: "star.fill")
-        { print("emter 2")
-            // delete from fourtites using the DataManager.
+        else if starButton.currentImage == UIImage(systemName: "star.fill") {
             DataManager.sharedInstance.deleteFavorite(selectedPlace)
-            // Change the state of the button state.
             starButton.setImage(UIImage(systemName: "star"), for: .normal)
         }
     }
@@ -73,11 +60,7 @@ class MapViewController: UIViewController {
         }
     }
     
-    @IBAction func favorites(_ sender: Any) {
-        print("akhil")
-
-    }
-
+    @IBAction func favorites(_ sender: Any) {}
 
     /*
     // MARK: - Navigation
@@ -94,7 +77,6 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        
         if let annotation = annotation as? Place {
             let identifier = "CustomPin"
             // Create a new view
@@ -106,7 +88,6 @@ extension MapViewController: MKMapViewDelegate {
             } else {
                 view = PlaceMarkerView(annotation: annotation, reuseIdentifier: identifier)
             }
-            
             return view
         }
         return nil
@@ -116,28 +97,21 @@ extension MapViewController: MKMapViewDelegate {
         if let customAnnotation = view.annotation as? Place {
             self.pinDetail.lineBreakMode = NSLineBreakMode.byWordWrapping
             self.pinDetail.numberOfLines = 0
-
             self.pinDetail.text = customAnnotation.longDescription!
             self.titlePin.text = customAnnotation.name!
-            
             selectedPlace = customAnnotation
-            
             if selectedPlace.favorite == true  {
-                //Update the button to filled star if the selected annotation is favorite
                 starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             } else {
                 starButton.setImage(UIImage(systemName: "star"), for: .normal)
             }
         }
     }
-    
 }
 
 extension MapViewController: FavDetailDelegate {
     func MoveToPlace(data: String) {
-        
         let list = DataManager.sharedInstance.listOfFav
-        
         for item in list {
             print(item)
             if item.key! == data {
@@ -145,7 +119,6 @@ extension MapViewController: FavDetailDelegate {
                 starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             }
         }
-
         //Center on the selected favorite and update the labels
         let miles: Double = 2500
         let zoomLocation = selectedPlace.coordinate
@@ -156,7 +129,6 @@ extension MapViewController: FavDetailDelegate {
         self.pinDetail.lineBreakMode = NSLineBreakMode.byWordWrapping
         self.pinDetail.numberOfLines = 0
         self.pinDetail.text = selectedPlace.longDescription!
-        self.titlePin.text = selectedPlace.name!
-        
+        self.titlePin.text = selectedPlace.name!  
     }
 }
