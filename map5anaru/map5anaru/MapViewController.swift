@@ -7,13 +7,18 @@
 //
 // location of plist file - https://www.hackingwithswift.com/example-code/system/how-to-find-the-path-to-a-file-in-your-bundle
 // Using custom MyPintAnnotation https://forums.developer.apple.com/thread/70205
+// Tulip's help and Office Hours for references
 
 import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
+    
     @IBOutlet var titlePin: UILabel!
     @IBOutlet var pinDetail: UILabel!
+    @IBOutlet var starButton: UIButton!
+    // To keep track of the current selected place
+    var selectedPlace = Place(name: nil,desc: nil)
     
     @IBOutlet var mapView: MKMapView! {
         didSet { mapView.delegate = self }
@@ -22,6 +27,11 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Set the button to empty star to start
+        starButton.setImage(UIImage(systemName: "star"), for: .normal)
+        starButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,47 +39,43 @@ class MapViewController: UIViewController {
         mapView.pointOfInterestFilter = .excludingAll
         
         // Setting up the starting View of the MAP
-        
-        let miles: Double = 500 * 1600/16
-        // Set a center point
-        let zoomLocation = CLLocationCoordinate2DMake(41.7897, -87.5997)
-        // Creat the region we want to see
+        let miles: Double = 20000
+        let zoomLocation = CLLocationCoordinate2DMake(41.9, -87.655697)
         let viewRegion = MKCoordinateRegion.init(center: zoomLocation,
                                                  latitudinalMeters: miles, longitudinalMeters: miles)
-        // Set the initial region on the map
         mapView.setRegion(viewRegion, animated: true)
         
-        // Adding points to the map
-//        let coordinates = CLLocationCoordinate2DMake(41.7897, -87.5997)
-//        let annotation = AnnotationDetail(title: "The University of Chicago",
-//        subtitle: "2nd Happiest Place on Earth", coordinate: coordinates)
-//        mapView.addAnnotation(annotation)
+        DataManager.sharedInstance.loadAnnotationFromPlist(mapView)
+    }
+
+    @objc func buttonTapped(_ sender: UIButton) {
         
+        if starButton.currentImage == UIImage(systemName: "star")
+        { print("emter 1")
+            DataManager.sharedInstance.saveFavorites(selectedPlace)
+            starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            // save fourtites using the DataManager.
+            // Change the state of the button state.
+        }
+        
+        else if starButton.currentImage == UIImage(systemName: "star.fill")
+        { print("emter 2")
+            // delete from fourtites using the DataManager.
+            DataManager.sharedInstance.deleteFavorite(selectedPlace)
+            // Change the state of the button state.
+            starButton.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+    }
     
-        
-        let urlPath = Bundle.main.url(forResource: "Data", withExtension: "plist")
-        var locations: MyLocations?
-        do {
-            let data = try Data(contentsOf: urlPath!)
-            let decoder = PropertyListDecoder()
-            locations = try decoder.decode(MyLocations.self, from: data)
-        } catch {
-            // Handle error
-            print("There is an error with decoding the plist file")
-            print(error)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? TableViewController {
+            destination.delegate = self
         }
-        
-        
-        /// Adding places to the mao
-        for items in locations!.places {
-            let coordinates = CLLocationCoordinate2D(latitude: items.lat, longitude: items.long)
-            let annotation = Place(name: items.name,
-                                    desc: items.description)
-                annotation.coordinate = coordinates
-                annotation.title = items.name
-                mapView.addAnnotation(annotation)
-        }
-        
+    }
+    
+    @IBAction func favorites(_ sender: Any) {
+        print("akhil")
+
     }
 
 
@@ -86,10 +92,6 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        print("sdf")
-    }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -110,25 +112,6 @@ extension MapViewController: MKMapViewDelegate {
         return nil
     }
     
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//        if let annotation = annotation as? AnnotationDetail {
-//            let identifier = "CustomPin"
-//            // Create a new view
-//            var view: PlaceMarkerView
-//            // Deque an annotation view or create a new one
-//            if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? PlaceMarkerView {
-//                dequeuedView.annotation = annotation
-//                view = dequeuedView
-//            } else {
-//                view = PlaceMarkerView(annotation: annotation, reuseIdentifier: identifier)
-//            }
-//
-//            return view
-//        }
-//        return nil
-//    }
-    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if let customAnnotation = view.annotation as? Place {
             self.pinDetail.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -136,7 +119,44 @@ extension MapViewController: MKMapViewDelegate {
 
             self.pinDetail.text = customAnnotation.longDescription!
             self.titlePin.text = customAnnotation.name!
+            
+            selectedPlace = customAnnotation
+            
+            if selectedPlace.favorite == true  {
+                //Update the button to filled star if the selected annotation is favorite
+                starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            } else {
+                starButton.setImage(UIImage(systemName: "star"), for: .normal)
+            }
         }
     }
     
+}
+
+extension MapViewController: FavDetailDelegate {
+    func MoveToPlace(data: String) {
+        
+        let list = DataManager.sharedInstance.listOfFav
+        
+        for item in list {
+            print(item)
+            if item.key! == data {
+                selectedPlace = item.value
+                starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            }
+        }
+
+        //Center on the selected favorite and update the labels
+        let miles: Double = 2500
+        let zoomLocation = selectedPlace.coordinate
+        let viewRegion = MKCoordinateRegion(center: zoomLocation, latitudinalMeters: miles, longitudinalMeters: miles)
+        mapView.setRegion(viewRegion, animated: true)
+        mapView.showsCompass = false
+        mapView.pointOfInterestFilter = .excludingAll
+        self.pinDetail.lineBreakMode = NSLineBreakMode.byWordWrapping
+        self.pinDetail.numberOfLines = 0
+        self.pinDetail.text = selectedPlace.longDescription!
+        self.titlePin.text = selectedPlace.name!
+        
+    }
 }

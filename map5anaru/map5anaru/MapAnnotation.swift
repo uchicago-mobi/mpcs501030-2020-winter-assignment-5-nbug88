@@ -15,25 +15,13 @@ class Place: MKPointAnnotation {
     // Description of the point of interest
     var longDescription: String?
     //Title and Coordinate are existing properties.
+    var favorite = false
     
-    init(name: String, desc: String) {
+    init(name: String?, desc: String?) {
         self.name = name
         self.longDescription = desc
     }
 }
-//
-//class AnnotationDetail: NSObject, MKAnnotation {
-//    let title: String?
-//    let subtitle: String?
-//    let coordinate: CLLocationCoordinate2D
-//    
-//    init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D) {
-//        self.title = title
-//        self.subtitle = subtitle
-//        self.coordinate = coordinate
-//        super.init()
-//    }
-//}
 
 class PlaceMarkerView: MKMarkerAnnotationView {
     override var annotation: MKAnnotation? {
@@ -59,13 +47,6 @@ struct MyPlaces: Codable, Hashable {
     var long: Double
     var type: Int
 }
-
-//struct MyRegions: Codable, Hashable {
-//    var loca: Double
-//    var locb: Double
-//    var locc: Double
-//    var locd: Double
-//}
 
 
 
